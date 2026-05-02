@@ -1,0 +1,539 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --blk:#0a0908;--chr:#1a1814;--gld:#c9933a;--glt:#e8b96a;
+    --crm:#f0e6d3;--mut:#9a8f82;--wht:#fafaf8;--brd:rgba(201,147,58,.18);
+    --red:#c0392b;--green:#27ae60;--purple:#8e44ad;
+    --serif:'Cormorant Garamond',Georgia,serif;--sans:'Montserrat',system-ui,sans-serif;
+  }
+  #mk{font-family:var(--sans);background:var(--blk);color:var(--crm);border-radius:12px;overflow:hidden;max-height:620px;overflow-y:auto;scroll-behavior:smooth}
+  #mk::-webkit-scrollbar{width:3px}
+  #mk::-webkit-scrollbar-thumb{background:var(--gld);border-radius:2px}
+
+  .mnav{background:rgba(10,9,8,.95);border-bottom:1px solid var(--brd);padding:0 18px;display:flex;align-items:center;gap:12px;height:52px;position:sticky;top:0;z-index:99;backdrop-filter:blur(10px)}
+  .mlogo{font-family:var(--serif);font-size:1.25rem;color:var(--gld);font-weight:600;margin-right:auto;letter-spacing:.04em}
+  .mlogo small{display:block;font-family:var(--sans);font-size:.55rem;color:var(--mut);font-style:normal}
+  .mnav a{font-size:.62rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);text-decoration:none;padding:5px 7px;cursor:pointer;transition:color .2s}
+  .mnav a:hover{color:var(--gld)}
+  .mordbtn{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border:1.5px solid var(--gld);border-radius:3px;color:var(--gld);background:none;cursor:pointer;transition:all .2s;font-family:var(--sans)}
+  .mordbtn:hover{background:var(--gld);color:var(--blk)}
+
+  .mpage{display:none}.mpage.act{display:block}
+
+  /* hero */
+  .mhero{position:relative;height:340px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+  .mhero-bg{position:absolute;inset:0}
+  .mhero-bg img{width:100%;height:100%;object-fit:cover}
+  .mhero-ov{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,9,8,.92) 0%,rgba(10,9,8,.65) 55%,rgba(10,9,8,.4) 100%)}
+  .mhero-c{position:relative;z-index:2;padding:0 18px}
+  .mbadge{font-size:.58rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gld);margin-bottom:10px}
+  .mhero-t{font-family:var(--serif);font-size:2.5rem;font-weight:600;line-height:1.08;color:var(--wht);margin-bottom:8px}
+  .mhero-t em{color:var(--gld);font-style:italic}
+  .mhero-s{font-size:.76rem;color:rgba(240,230,211,.75);margin:0 auto 20px;font-weight:300}
+  .mbtns{display:flex;gap:10px;justify-content:center}
+  .mbtn{font-size:.67rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:9px 20px;border-radius:3px;cursor:pointer;text-decoration:none;border:2px solid var(--gld);transition:all .2s;display:inline-flex;align-items:center}
+  .mbtn-p{background:var(--gld);color:var(--blk)}.mbtn-p:hover{background:var(--glt)}
+  .mbtn-g{background:transparent;color:var(--crm);border-color:rgba(240,230,211,.35)}.mbtn-g:hover{border-color:var(--gld);color:var(--gld)}
+  .mstats{display:flex;align-items:center;gap:16px;justify-content:center;margin-top:20px}
+  .mstat{text-align:center}
+  .msnum{display:block;font-family:var(--serif);font-size:1.4rem;color:var(--gld);font-weight:600;line-height:1}
+  .mslbl{display:block;font-size:.58rem;color:var(--mut);letter-spacing:.09em;text-transform:uppercase;margin-top:3px}
+  .msdiv{width:1px;height:28px;background:var(--brd)}
+
+  /* city strip */
+  .mstrip{background:#111010;border-bottom:1px solid var(--brd);padding:10px 18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .mstrip-lbl{font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);flex-shrink:0}
+  .cpill{font-size:.7rem;font-weight:600;padding:5px 14px;border-radius:20px;cursor:pointer;text-decoration:none;transition:all .2s}
+  .cpill-p{background:rgba(201,147,58,.12);border:1px solid rgba(201,147,58,.3);color:var(--glt)}
+  .cpill-m{background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.3);color:#e07b71}
+  .cpill-n{background:rgba(212,192,74,.1);border:1px solid rgba(212,192,74,.25);color:#d4c04a}
+
+  /* section */
+  .msec{padding:44px 18px}
+  .msec-alt{background:var(--chr)}
+  .msh{text-align:center;margin-bottom:28px}
+  .mtag{font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gld);margin-bottom:7px}
+  .mst{font-family:var(--serif);font-size:1.8rem;font-weight:600;color:var(--wht);line-height:1.15}
+  .mst em{color:var(--gld);font-style:italic}
+  .mline{width:32px;height:2px;background:var(--gld);margin:12px auto 0}
+
+  /* branch tabs */
+  .btabs{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}
+  .btab{padding:6px 16px;font-size:.64rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;background:transparent;border:1px solid var(--brd);color:var(--mut);border-radius:2px;cursor:pointer;transition:all .2s;font-family:var(--sans)}
+  .btab:hover{border-color:var(--gld);color:var(--gld)}
+  .btab.act{background:var(--gld);border-color:var(--gld);color:var(--blk)}
+
+  /* branch grid */
+  .bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+  .bcard{background:#161412;border:1px solid var(--brd);border-radius:5px;overflow:hidden;transition:transform .3s,box-shadow .3s}
+  .bcard:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.5);border-color:rgba(201,147,58,.35)}
+  .bcard-img{position:relative;height:150px;overflow:hidden}
+  .bcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+  .bcard:hover .bcard-img img{transform:scale(1.05)}
+  .bctag{position:absolute;bottom:10px;left:10px;font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:2px}
+  .bctag-pune{background:rgba(201,147,58,.85);color:var(--blk)}
+  .bctag-mumbai{background:rgba(192,57,43,.85);color:#fff}
+  .bctag-nashik{background:rgba(130,100,30,.9);color:#f0e6d3}
+  .bspec{position:absolute;top:10px;right:10px;font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px}
+  .bspec-flagship{background:var(--gld);color:var(--blk)}
+  .bspec-new{background:var(--green);color:#fff}
+  .bspec-origin{background:var(--purple);color:#fff}
+  .bcbody{padding:14px 15px}
+  .bcbody h3{font-family:var(--serif);font-size:1.1rem;color:var(--wht);margin-bottom:4px}
+  .bctag-line{font-family:var(--serif);font-size:.8rem;color:var(--gld);font-style:italic;margin-bottom:10px;line-height:1.45}
+  .bcdet{display:flex;align-items:flex-start;gap:6px;font-size:.72rem;color:var(--mut);margin-bottom:5px;line-height:1.5}
+  .bcdet span:first-child{flex-shrink:0}
+  .bcsvcs{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0}
+  .bcsvc{font-size:.58rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid var(--brd);color:var(--mut)}
+  .bcbts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .bcbt{font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 13px;border-radius:2px;cursor:pointer;text-decoration:none;transition:all .2s}
+  .bcbt-p{background:var(--gld);color:var(--blk);border:none}.bcbt-p:hover{background:var(--glt)}
+  .bcbt-g{background:transparent;color:var(--crm);border:1px solid rgba(240,230,211,.25)}.bcbt-g:hover{border-color:var(--gld);color:var(--gld)}
+  .bcard.hide{display:none}
+
+  /* menu */
+  .mtabs{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}
+  .mtab{padding:6px 15px;font-size:.63rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;background:transparent;border:1px solid var(--brd);color:var(--mut);border-radius:2px;cursor:pointer;transition:all .2s;font-family:var(--sans)}
+  .mtab:hover{border-color:var(--gld);color:var(--gld)}
+  .mtab.act{background:var(--gld);border-color:var(--gld);color:var(--blk)}
+  .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+  .mmi{background:#161412;border:1px solid var(--brd);border-radius:3px;padding:14px 15px;display:flex;align-items:flex-start;gap:10px;transition:border-color .3s,transform .3s}
+  .mmi:hover{border-color:var(--gld);transform:translateX(3px)}
+  .mmi-em{font-size:1.3rem;flex-shrink:0;margin-top:2px}
+  .mmi h4{font-family:var(--serif);font-size:.95rem;color:var(--wht);margin-bottom:3px}
+  .mmi p{font-size:.7rem;color:var(--mut);line-height:1.5;margin-bottom:7px}
+  .mmif{display:flex;align-items:center;gap:7px}
+  .mprice{font-family:var(--serif);font-size:.95rem;color:var(--gld);font-weight:600}
+  .mveg{font-size:.56rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;border-radius:2px;background:rgba(34,139,34,.12);color:#5cb85c;border:1px solid rgba(34,139,34,.2)}
+  .mbs{font-size:.56rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;border-radius:2px;background:rgba(201,147,58,.1);color:var(--gld);border:1px solid var(--brd)}
+
+  /* timeline */
+  .tl{margin:20px 0 0}
+  .tli{display:flex;align-items:flex-start;gap:14px;padding:10px 0;border-bottom:1px solid var(--brd)}
+  .tli:first-child{border-top:1px solid var(--brd)}
+  .tly{font-family:var(--serif);font-size:.9rem;font-weight:600;color:var(--gld);min-width:44px;flex-shrink:0}
+  .tlt{font-size:.76rem;color:var(--mut);line-height:1.55;padding-top:1px}
+  .tli-act .tly{color:var(--glt)}.tli-act .tlt{color:var(--crm)}
+
+  /* testimonials */
+  .mts-w{overflow:hidden}
+  .mts-tr{display:flex;gap:14px;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+  .mtcard{min-width:min(320px,78vw);background:#161412;border:1px solid var(--brd);border-radius:5px;padding:20px 18px;flex-shrink:0}
+  .mtq{font-family:var(--serif);font-size:.9rem;color:var(--crm);line-height:1.68;font-style:italic;margin-bottom:16px}
+  .mta{display:flex;align-items:center;gap:10px}
+  .mtav{width:32px;height:32px;border-radius:50%;background:var(--gld);color:var(--blk);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;flex-shrink:0}
+  .mta strong{font-size:.78rem;color:var(--wht);display:block}
+  .mta span{font-size:.68rem;color:var(--mut)}
+  .mtstars{margin-left:auto;font-size:.74rem}
+  .msc{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:18px}
+  .msbtn{width:32px;height:32px;border-radius:50%;background:transparent;border:1px solid var(--brd);color:var(--gld);font-size:.78rem;cursor:pointer;transition:all .2s;font-family:var(--sans)}
+  .msbtn:hover{background:var(--gld);color:var(--blk);border-color:var(--gld)}
+  .msdots{display:flex;gap:5px;align-items:center}
+  .mdot{width:6px;height:6px;border-radius:50%;background:var(--brd);cursor:pointer;transition:all .3s}
+  .mdot.act{background:var(--gld);width:16px;border-radius:3px}
+
+  /* gallery */
+  .mgall{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .mgi{position:relative;height:120px;border-radius:3px;overflow:hidden;cursor:pointer}
+  .mgi img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+  .mgi:hover img{transform:scale(1.07)}
+  .mgi-hov{position:absolute;inset:0;background:rgba(10,9,8,.7);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
+  .mgi-hov span{font-family:var(--serif);font-size:.82rem;color:var(--gld);font-style:italic}
+  .mgi:hover .mgi-hov{opacity:1}
+  .mgi.hide{display:none}
+
+  /* about inline */
+  .mabout-g{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}
+  .mabout-imgs{position:relative;height:240px}
+  .mabout-m{width:80%;height:100%;object-fit:cover;border-radius:4px;position:absolute;left:0;top:0}
+  .mabout-a{width:44%;height:50%;object-fit:cover;border-radius:4px;position:absolute;right:0;bottom:0;border:3px solid var(--chr)}
+  .mabout-b{font-size:.76rem;color:var(--mut);line-height:1.78;margin-bottom:12px}
+  .mvals{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+  .mval{background:var(--chr);border:1px solid var(--brd);border-radius:3px;padding:12px 13px;transition:border-color .3s}
+  .mval:hover{border-color:var(--gld)}
+  .mval-i{font-size:1.1rem;display:block;margin-bottom:6px}
+  .mval h4{font-family:var(--serif);font-size:.9rem;color:var(--wht);margin-bottom:3px}
+  .mval p{font-size:.68rem;color:var(--mut);line-height:1.55}
+
+  /* contact */
+  .mcont-g{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .mcb{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px}
+  .mci{font-size:1rem;margin-top:2px}
+  .mcb h4{font-family:var(--serif);font-size:.88rem;color:var(--gld);margin-bottom:2px}
+  .mcb p{font-size:.72rem;color:var(--mut);line-height:1.6}
+  .mfinput{width:100%;padding:9px 12px;background:#161412;border:1px solid var(--brd);color:var(--crm);font-family:var(--sans);font-size:.76rem;border-radius:2px;outline:none;transition:border-color .25s;margin-bottom:8px}
+  .mfinput:focus{border-color:var(--gld)}
+  .mfinput::placeholder{color:var(--mut)}
+  .msocials{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px}
+  .msoc{font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border:1px solid var(--brd);border-radius:2px;color:var(--mut);text-decoration:none;transition:all .2s}
+  .msoc:hover{border-color:var(--gld);color:var(--gld)}
+
+  /* footer */
+  .mfooter{background:#111010;border-top:1px solid var(--brd);padding:28px 18px 16px}
+  .mfg{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1fr;gap:18px;margin-bottom:20px}
+  .mfc h5{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gld);margin-bottom:8px}
+  .mfc a,.mfc span{display:block;font-size:.7rem;color:var(--mut);text-decoration:none;margin-bottom:5px;cursor:pointer;transition:color .2s}
+  .mfc a:hover{color:var(--gld)}
+  .mfbrand p{font-size:.7rem;color:var(--mut);margin-top:8px;line-height:1.7}
+  .mfbot{border-top:1px solid var(--brd);padding-top:14px;text-align:center;font-size:.63rem;color:var(--mut)}
+
+  @media(max-width:480px){
+    .mgall{grid-template-columns:repeat(2,1fr)}
+    .mabout-g,.mcont-g,.mfg{grid-template-columns:1fr}
+    .mvals{grid-template-columns:1fr}
+    .bgrid{grid-template-columns:1fr}
+    .mhero-t{font-size:1.9rem}
+  }
+</style>
+
+<div id="mk">
+  <nav class="mnav">
+    <div class="mlogo">MIYA <em style="font-style:italic;font-family:'Cormorant Garamond',serif">Kebabs</em><small>मिया केबब्स · 8 Branches</small></div>
+    <a onclick="show('home')">Home</a>
+    <a onclick="show('branches')">Branches</a>
+    <a onclick="show('menu')">Menu</a>
+    <a onclick="show('about')">About</a>
+    <a onclick="show('gallery')">Gallery</a>
+    <a onclick="show('contact')">Contact</a>
+    <button class="mordbtn" onclick="show('branches')">Find Branch</button>
+  </nav>
+
+  <!-- HOME -->
+  <div class="mpage act" id="page-home">
+    <div class="mhero">
+      <div class="mhero-bg"><img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=1200&q=75" alt="Kebabs"/></div>
+      <div class="mhero-ov"></div>
+      <div class="mhero-c">
+        <p class="mbadge">✦ Mumbai &amp; Pune's Fastest-Growing Kebab Brand ✦</p>
+        <h1 class="mhero-t">One Flavour.<br/><em>Many Cities.</em></h1>
+        <p class="mhero-s">Authentic Kebabs, Shawarmas &amp; Mughlai Bites — Across 8 Locations</p>
+        <div class="mbtns">
+          <a class="mbtn mbtn-p" onclick="show('branches')">Find a Branch</a>
+          <a class="mbtn mbtn-g" onclick="show('menu')">View Menu</a>
+        </div>
+        <div class="mstats">
+          <div class="mstat"><span class="msnum">8</span><span class="mslbl">Locations</span></div>
+          <div class="msdiv"></div>
+          <div class="mstat"><span class="msnum">4.8</span><span class="mslbl">⭐ Rating</span></div>
+          <div class="msdiv"></div>
+          <div class="mstat"><span class="msnum">2011</span><span class="mslbl">Est. Year</span></div>
+          <div class="msdiv"></div>
+          <div class="mstat"><span class="msnum">2</span><span class="mslbl">Cities</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="mstrip">
+      <span class="mstrip-lbl">Our Cities:</span>
+      <a class="cpill cpill-p" onclick="show('branches');filterBranch('pune')">🟠 Pune (3)</a>
+      <a class="cpill cpill-m" onclick="show('branches');filterBranch('mumbai')">🔴 Mumbai (4)</a>
+      <a class="cpill cpill-n" onclick="show('branches');filterBranch('nashik')">🟡 Nashik (1)</a>
+    </div>
+    <!-- Quick branch cards on home -->
+    <div class="msec">
+      <div class="msh"><p class="mtag">Served Everywhere</p><h2 class="mst">Fan Favourites</h2><div class="mline"></div></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px">
+        <div style="background:#161412;border:1px solid var(--brd);border-radius:4px;overflow:hidden;transition:transform .3s" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform=''">
+          <div style="height:130px;overflow:hidden"><img src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=400&q=75" alt="" style="width:100%;height:100%;object-fit:cover"/></div>
+          <div style="padding:12px 13px"><div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:#fafaf8;margin-bottom:4px">Chicken Shawarma</div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Cormorant Garamond',serif;color:var(--gld);font-size:.95rem">₹120</span><span style="font-size:.58rem;background:var(--gld);color:var(--blk);padding:2px 7px;border-radius:2px;font-weight:700">Best Seller</span></div></div>
+        </div>
+        <div style="background:#161412;border:1px solid var(--brd);border-radius:4px;overflow:hidden;transition:transform .3s" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform=''">
+          <div style="height:130px;overflow:hidden"><img src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400&q=75" alt="" style="width:100%;height:100%;object-fit:cover"/></div>
+          <div style="padding:12px 13px"><div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:#fafaf8;margin-bottom:4px">Chicken Tikka</div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Cormorant Garamond',serif;color:var(--gld);font-size:.95rem">₹180</span><span style="font-size:.58rem;background:#27ae60;color:#fff;padding:2px 7px;border-radius:2px;font-weight:700">Chef's Pick</span></div></div>
+        </div>
+        <div style="background:#161412;border:1px solid var(--brd);border-radius:4px;overflow:hidden;transition:transform .3s" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform=''">
+          <div style="height:130px;overflow:hidden"><img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400&q=75" alt="" style="width:100%;height:100%;object-fit:cover"/></div>
+          <div style="padding:12px 13px"><div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:#fafaf8;margin-bottom:4px">Seekh Kebab</div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Cormorant Garamond',serif;color:var(--gld);font-size:.95rem">₹160</span></div></div>
+        </div>
+        <div style="background:#161412;border:1px solid var(--brd);border-radius:4px;overflow:hidden;transition:transform .3s" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform=''">
+          <div style="height:130px;overflow:hidden"><img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&q=75" alt="" style="width:100%;height:100%;object-fit:cover"/></div>
+          <div style="padding:12px 13px"><div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:#fafaf8;margin-bottom:4px">Changezi Chicken</div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Cormorant Garamond',serif;color:var(--gld);font-size:.95rem">₹250</span><span style="font-size:.58rem;color:var(--gld);border:1px solid var(--brd);padding:2px 7px;border-radius:2px;font-weight:700">Must Try</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- testimonials on home -->
+    <div class="msec msec-alt">
+      <div class="msh"><p class="mtag">Voices Across Cities</p><h2 class="mst">What People Say</h2><div class="mline"></div></div>
+      <div class="mts-w"><div class="mts-tr" id="ttr">
+        <div class="mtcard"><p class="mtq">"Best shawarma in Koregaon Park! The garlic sauce is absolutely killer. Been coming every week for two years."</p><div class="mta"><div class="mtav">R</div><div><strong>Rahul M.</strong><span>Koregaon Park, Pune</span></div><div class="mtstars">⭐⭐⭐⭐⭐</div></div></div>
+        <div class="mtcard"><p class="mtq">"The Bandra outlet is our go-to after every night out at Pali Hill. Nothing hits like that seekh roll at midnight."</p><div class="mta"><div class="mtav">Z</div><div><strong>Zaira K.</strong><span>Bandra, Mumbai</span></div><div class="mtstars">⭐⭐⭐⭐⭐</div></div></div>
+        <div class="mtcard"><p class="mtq">"Changezi chicken is something else. Rich, creamy, smoky — Mughlai perfection. Worth every rupee."</p><div class="mta"><div class="mtav">S</div><div><strong>Sana K.</strong><span>Viman Nagar, Pune</span></div><div class="mtstars">⭐⭐⭐⭐⭐</div></div></div>
+        <div class="mtcard"><p class="mtq">"The Andheri branch is perfect for office lunch. Quick, fresh, and the chicken tikka roll is absolute 10/10."</p><div class="mta"><div class="mtav">A</div><div><strong>Arjun P.</strong><span>Andheri, Mumbai</span></div><div class="mtstars">⭐⭐⭐⭐⭐</div></div></div>
+        <div class="mtcard"><p class="mtq">"So glad Miya opened in Kalyan! Finally authentic kebabs without the Mumbai drive. Absolutely love it!"</p><div class="mta"><div class="mtav">F</div><div><strong>Fatima R.</strong><span>Kalyan</span></div><div class="mtstars">⭐⭐⭐⭐⭐</div></div></div>
+      </div>
+      <div class="msc"><button class="msbtn" id="tprev">←</button><div class="msdots" id="tdots"></div><button class="msbtn" id="tnext">→</button></div></div>
+    </div>
+  </div>
+
+  <!-- BRANCHES -->
+  <div class="mpage" id="page-branches">
+    <div class="msec msec-alt" style="padding-top:32px">
+      <div class="msh"><p class="mtag">Where to Find Us</p><h2 class="mst">All 8 Branches</h2><div class="mline"></div></div>
+      <div class="btabs" id="btabs">
+        <button class="btab act" data-f="all">All Cities</button>
+        <button class="btab" data-f="pune">🟠 Pune</button>
+        <button class="btab" data-f="mumbai">🔴 Mumbai</button>
+        <button class="btab" data-f="nashik">🟡 Nashik</button>
+      </div>
+      <div class="bgrid" id="bgrid">
+        <div class="bcard" data-c="pune">
+          <div class="bcard-img"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=70" alt=""/><span class="bctag bctag-pune">Pune</span><span class="bspec bspec-flagship">Flagship</span></div>
+          <div class="bcbody"><h3>Koregaon Park</h3><p class="bctag-line">"Where Good Taste Lives."</p><div class="bcdet"><span>📍</span><span>Shop 4/5/6, Meera Nagar Garden Society, Lane 7, KP, Pune 411001</span></div><div class="bcdet"><span>📞</span><span>+91 77588 78975</span></div><div class="bcdet"><span>🕐</span><span>1 PM – 12 AM · Daily</span></div><div class="bcsvcs"><span class="bcsvc">Dine-in</span><span class="bcsvc">Takeaway</span><span class="bcsvc">Delivery</span></div><div class="bcbts"><a class="bcbt bcbt-p" href="https://maps.google.com/?q=Miya+Kebabs+Koregaon+Park" target="_blank">Directions</a><a class="bcbt bcbt-g" href="https://www.zomato.com/pune/miya-kebabs-koregaon-park" target="_blank">Order Online</a></div></div>
+        </div>
+        <div class="bcard" data-c="pune">
+          <div class="bcard-img"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=70" alt=""/><span class="bctag bctag-pune">Pune</span><span class="bspec bspec-new">New</span></div>
+          <div class="bcbody"><h3>Baner</h3><p class="bctag-line">"Baner asked for something New. We brought the Fire."</p><div class="bcdet"><span>📍</span><span>Baner Road, Pune 411045</span></div><div class="bcdet"><span>📞</span><span>+91 81693 49559</span></div><div class="bcdet"><span>🕐</span><span>1 PM – 12 AM · Daily</span></div><div class="bcsvcs"><span class="bcsvc">Dine-in</span><span class="bcsvc">Takeaway</span><span class="bcsvc">Delivery</span></div><div class="bcbts"><a class="bcbt bcbt-p" href="https://www.google.com/maps/place/Miya+Kebabs/@18.5663352,73.7662455,15z" target="_blank">Directions</a><a class="bcbt bcbt-g" href="https://www.zomato.com/pune/miya-kebabs-baner" target="_blank">Order Online</a></div></div>
+        </div>
+        <div class="bcard" data-c="pune">
+          <div class="bcard-img"><img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=400&q=70" alt=""/><span class="bctag bctag-pune">Pune</span></div>
+          <div class="bcbody"><h3>Viman Nagar</h3><p class="bctag-line">"Premium flavors in Pune's tech hub."</p><div class="bcdet"><span>📍</span><span>Shop 3, Konark Nagar, Viman Nagar, Pune 411014</span></div><div class="bcdet"><span>📞</span><span>+91 98765 43210</span></div><div class="bcdet"><span>🕐</span><span>1 PM – 12 AM · Daily</span></div><div class="bcsvcs"><span class="bcsvc">Dine-in</span><span class="bcsvc">Takeaway</span><span class="bcsvc">Delivery</span></div><div class="bcbts"><a class="bcbt bcbt-p" href="https://maps.google.com/?q=Miya+Kebabs+Viman+Nagar" target="_blank">Directions</a><a class="bcbt bcbt-g" href="https://www.zomato.com/pune/miya-kebabs-viman-nagar" target="_blank">Order Online</a></div></div>
+        </div>
+        <div class="bcard" data-c="mumbai">
+          <div class="bcard-img"><img src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=400&q=70" alt=""/><span class="bctag bctag-mumbai">Mumbai</span></div>
+          <div class="bcbody"><h3>Bandra – Pali Hill</h3><p class="bctag-line">"Bandra has opinions. About Miya, it's unanimous."</p><div class="bcdet"><span>📍</span><span>Pali Hill, Bandra West, Mumbai 400050</span></div><div class="bcdet"><span>📞</span><span>+91 85914 31992</span></div><div class="bcdet"><span>🕐</span><span>12 PM – 1 AM · Daily</span></div><div class="bcsvcs"><span class="bcsvc">Dine-in</span><span class="bcsvc">Takeaway</span><span class="bcsvc">Delivery</span></div><div class="bcbts"><a class="bcbt bcbt-p" href="https://www.google.com/maps/place/Miya+Kebabs/@19.0624575,72.8207842,15z" target="_blank">Directions</a><a class="bcbt bcbt-g" href="tel:+918591431992">Call to Order</a></div></div>
+        </div>
+        <div class="bcard" data-c="mumbai">
+          <div class="bcard-img"><img src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400&q=70" alt=""/><span class="bctag bctag-mumbai">Mumbai</span></div>
+          <div class="bcbody"><h3>Andheri</h3><p class="bctag-line">"Fast City. Fast People. Kebabs that keep up."</p><div class="bcdet"><span>📍</span><span>Andheri West, Mumbai 400058</span></div><div class="bcdet"><span>📞</span><span>+91 82375 91750</span></div><div class="bcdet"><span>🕐</span><span>12 PM – 1 AM · Daily</span></div><div class="bcsvcs"><span class="bcsvc">Dine-in</span><span class="bcsvc">Takeaway</span><span class="bcsvc">Delivery</span></div><div class="bcbts"><a class="bcbt bcbt-p" href="https://www.google.com/maps/place/Miya+Kebabs/@19.1515107,72.8217212,15z" target="_blank">Directions</a><a class="bcbt bcbt-g" href="tel:+918237591750">Call to Order</a></div></div>
+        </div>
+        <div class="bcard" data-c="mumbai">
+          <div class="bcard-img"><img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400&q=70" alt=""/><span class="bctag bctag-mumbai">Mumbai</span></div>
+          <div class="bcbody"><h3>Fort</h3><p class="bctag-line">"Fort never settles. Neither do our flavours."</p><div class="bcdet"><span>📍</span><span>Fort Area, South Mumbai 400001</span></div><div class="bcdet"><span>📞</span><span>+91 88477 47644</span></div><div class="bcdet"><span>🕐</span><span>11 AM – 11 PM · Mon–Sat</span></div><div class="bcsvcs"><span class="bcsvc">Dine-in</span><span class="bcsvc">Takeaway</span><span class="bcsvc">Delivery</span></div><div class="bcbts"><a class="bcbt bcbt-p" href="https://www.google.com/maps/place/miya+kebab+fort" target="_blank">Directions</a><a class="bcbt bcbt-g" href="tel:+918847747644">Call to Order</a></div></div>
+        </div>
+        <div class="bcard" data-c="mumbai">
+          <div class="bcard-img"><img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&q=70" alt=""/><span class="bctag bctag-mumbai">Mumbai</span><span class="bspec bspec-new">New</span></div>
+          <div class="bcbody"><h3>Kalyan</h3><p class="bctag-line">"Kalyan just got its best decision yet."</p><div class="bcdet"><span>📍</span><span>Kalyan West, Thane 421301</span></div><div class="bcdet"><span>📞</span><span>+91 91674 64755</span></div><div class="bcdet"><span>🕐</span><span>12 PM – 12 AM · Daily</span></div><div class="bcsvcs"><span class="bcsvc">Dine-in</span><span class="bcsvc">Takeaway</span><span class="bcsvc">Delivery</span></div><div class="bcbts"><a class="bcbt bcbt-p" href="https://www.google.com/maps/place/Miya+Kebabs/@19.2464081,73.1362385,15z" target="_blank">Directions</a><a class="bcbt bcbt-g" href="tel:+919167464755">Call to Order</a></div></div>
+        </div>
+        <div class="bcard" data-c="nashik">
+          <div class="bcard-img"><img src="https://images.unsplash.com/photo-1616669944447-d67fd7a53e00?w=400&q=70" alt=""/><span class="bctag bctag-nashik">Nashik</span><span class="bspec bspec-origin">Origin</span></div>
+          <div class="bcbody"><h3>Nashik – Al Arabian Express</h3><p class="bctag-line">"Where it all began. The original craving since 2011."</p><div class="bcdet"><span>📍</span><span>College Road, Nashik 422005</span></div><div class="bcdet"><span>📞</span><span>+91 73503 42685</span></div><div class="bcdet"><span>🕐</span><span>11 AM – 11:30 PM · Daily</span></div><div class="bcsvcs"><span class="bcsvc">Dine-in</span><span class="bcsvc">Takeaway</span><span class="bcsvc">Delivery</span></div><div class="bcbts"><a class="bcbt bcbt-p" href="https://www.google.com/maps/place/Al+Arabian+Express" target="_blank">Directions</a><a class="bcbt bcbt-g" href="tel:+917350342685">Call to Order</a></div></div>
+        </div>
+      </div>
+
+      <!-- legend -->
+      <div style="display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:28px;padding:16px 0;border-top:1px solid var(--brd)">
+        <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--mut)"><span style="width:10px;height:10px;border-radius:50%;background:var(--gld);display:inline-block"></span>Pune – 3 branches</div>
+        <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--mut)"><span style="width:10px;height:10px;border-radius:50%;background:#c0392b;display:inline-block"></span>Mumbai – 4 branches</div>
+        <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--mut)"><span style="width:10px;height:10px;border-radius:50%;background:#d4ac0d;display:inline-block"></span>Nashik – 1 branch (Origin)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MENU -->
+  <div class="mpage" id="page-menu">
+    <div class="msec msec-alt" style="padding-top:32px">
+      <div class="msh"><p class="mtag">Available at All Branches</p><h2 class="mst">Our Menu</h2><div class="mline"></div></div>
+      <div class="mtabs" id="mtabs">
+        <button class="mtab act" data-c="all">All</button>
+        <button class="mtab" data-c="kebabs">Kebabs</button>
+        <button class="mtab" data-c="shawarmas">Shawarmas</button>
+        <button class="mtab" data-c="rolls">Rolls</button>
+        <button class="mtab" data-c="tandoori">Tandoori</button>
+        <button class="mtab" data-c="arabic">Arabic Specials</button>
+      </div>
+      <div class="mgrid" id="mmgrid"></div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="mpage" id="page-about">
+    <div class="msec" style="padding-top:32px">
+      <div class="mabout-g">
+        <div class="mabout-imgs">
+          <img class="mabout-m" src="https://images.unsplash.com/photo-1616669944447-d67fd7a53e00?w=500&q=75" alt="Cooking"/>
+          <img class="mabout-a" src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=300&q=75" alt="Tandoor"/>
+        </div>
+        <div>
+          <p class="mtag">Our Journey Since 2011</p>
+          <h2 class="mst">From a 200 sq.ft<br/><em>Dream to 8 Cities</em></h2>
+          <div class="mline" style="margin:12px 0 16px"></div>
+          <p class="mabout-b">What started as a small dream in 2011 became a story of passion, persistence, and people. In the heart of Nashik, inside a modest 200 sq. ft. restaurant, <strong style="color:var(--crm)">Junaid</strong> started a simple vision to serve authentic flavors people would keep coming back for.</p>
+          <p class="mabout-b">In 2021, under the parent brand <strong style="color:var(--crm)">Al Arabian Express</strong>, Miya Kebabs was born — expanding from Nashik to Bandra's Pali Hill, Kalyan, Andheri, Fort, Koregaon Park, and Baner.</p>
+          <div class="tl">
+            <div class="tli"><span class="tly">2011</span><span class="tlt">Founded in Nashik as Al Arabian Express</span></div>
+            <div class="tli"><span class="tly">2021</span><span class="tlt">Miya Kebabs brand launched</span></div>
+            <div class="tli"><span class="tly">2022</span><span class="tlt">Bandra, Andheri & Fort opened in Mumbai</span></div>
+            <div class="tli"><span class="tly">2023</span><span class="tlt">Koregaon Park flagship opened in Pune</span></div>
+            <div class="tli"><span class="tly">2024</span><span class="tlt">Viman Nagar & Kalyan branches launched</span></div>
+            <div class="tli tli-act"><span class="tly">2025</span><span class="tlt">Baner opens — 8 locations and growing!</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="mvals" style="margin-top:28px">
+        <div class="mval"><span class="mval-i">🌶️</span><h4>Authentic Spices</h4><p>Hand-ground masalas from Mumbai's oldest spice markets</p></div>
+        <div class="mval"><span class="mval-i">🔥</span><h4>Live Flame</h4><p>Traditional tandoor & charcoal grill across every outlet</p></div>
+        <div class="mval"><span class="mval-i">🌿</span><h4>Farm Fresh</h4><p>Sourced daily at every branch — no frozen shortcuts ever</p></div>
+        <div class="mval"><span class="mval-i">❤️</span><h4>Made with Love</h4><p>Every plate cooked as if for family — across all 8 outlets</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALLERY -->
+  <div class="mpage" id="page-gallery">
+    <div class="msec msec-alt" style="padding-top:32px">
+      <div class="msh"><p class="mtag">From Our Kitchens</p><h2 class="mst">Gallery</h2><div class="mline"></div></div>
+      <div class="mtabs" id="gtabs">
+        <button class="mtab act" data-g="all">All</button>
+        <button class="mtab" data-g="food">Food</button>
+        <button class="mtab" data-g="vibe">Vibe</button>
+        <button class="mtab" data-g="kitchen">Kitchen</button>
+      </div>
+      <div class="mgall" id="mgall">
+        <div class="mgi" data-g="food"><img src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=400&q=70" alt=""/><div class="mgi-hov"><span>Chicken Shawarma</span></div></div>
+        <div class="mgi" data-g="food"><img src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400&q=70" alt=""/><div class="mgi-hov"><span>Chicken Tikka</span></div></div>
+        <div class="mgi" data-g="vibe"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=70" alt=""/><div class="mgi-hov"><span>Restaurant Vibe</span></div></div>
+        <div class="mgi" data-g="kitchen"><img src="https://images.unsplash.com/photo-1616669944447-d67fd7a53e00?w=400&q=70" alt=""/><div class="mgi-hov"><span>Live Kitchen</span></div></div>
+        <div class="mgi" data-g="food"><img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400&q=70" alt=""/><div class="mgi-hov"><span>Seekh Kebab</span></div></div>
+        <div class="mgi" data-g="kitchen"><img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=400&q=70" alt=""/><div class="mgi-hov"><span>Our Tandoor</span></div></div>
+        <div class="mgi" data-g="food"><img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&q=70" alt=""/><div class="mgi-hov"><span>Changezi Chicken</span></div></div>
+        <div class="mgi" data-g="vibe"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=70" alt=""/><div class="mgi-hov"><span>Evening Vibe</span></div></div>
+        <div class="mgi" data-g="food"><img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&q=70" alt=""/><div class="mgi-hov"><span>Mixed Platter</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="mpage" id="page-contact">
+    <div class="msec" style="padding-top:32px">
+      <div class="msh"><p class="mtag">Get in Touch</p><h2 class="mst">Contact Us</h2><div class="mline"></div></div>
+      <div class="mcont-g">
+        <div>
+          <div class="mcb"><span class="mci">📧</span><div><h4>Email</h4><p>info@miyakebab.com</p></div></div>
+          <div class="mcb"><span class="mci">📞</span><div><h4>Bookings &amp; Catering</h4><p>+91 88477 47644 (Fort HQ)</p></div></div>
+          <div class="mcb"><span class="mci">📍</span><div><h4>Headquartered at</h4><p>Fort, South Mumbai &amp; Koregaon Park, Pune</p></div></div>
+          <div class="mcb"><span class="mci">🕐</span><div><h4>General Hours</h4><p>All branches open from 1 PM · 7 days</p></div></div>
+          <div class="msocials">
+            <a class="msoc" href="https://www.instagram.com/miyakebabs" target="_blank">Instagram</a>
+            <a class="msoc" href="https://miyakebabs.in" target="_blank">Website</a>
+            <a class="msoc" href="https://www.zomato.com/pune/miya-kebabs-koregaon-park" target="_blank">Zomato</a>
+            <a class="msoc" href="#">Swiggy</a>
+          </div>
+        </div>
+        <div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#fafaf8;margin-bottom:6px">Send a Message</h3>
+          <p style="font-size:.7rem;color:var(--mut);margin-bottom:14px">For franchise enquiries, catering, or general feedback</p>
+          <input class="mfinput" type="text" placeholder="Your Name"/>
+          <input class="mfinput" type="email" placeholder="Email Address"/>
+          <select class="mfinput" style="cursor:pointer">
+            <option value="">Select Branch / Enquiry Type</option>
+            <option>Koregaon Park, Pune</option><option>Baner, Pune</option><option>Viman Nagar, Pune</option>
+            <option>Bandra, Mumbai</option><option>Andheri, Mumbai</option><option>Fort, Mumbai</option>
+            <option>Kalyan, Mumbai</option><option>Nashik – Al Arabian Express</option>
+            <option>Franchise Enquiry</option><option>Catering / Bulk Order</option>
+          </select>
+          <textarea class="mfinput" placeholder="Your message..." rows="3" style="resize:none;margin-top:2px"></textarea>
+          <button class="mbtn mbtn-p" style="width:100%;justify-content:center;font-size:.7rem;margin-top:2px" onclick="this.textContent='✓ Message sent!';setTimeout(()=>this.textContent='Send Message',3000)">Send Message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="mfooter">
+    <div class="mfg">
+      <div class="mfc mfbrand">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--gld);font-weight:600">MIYA <em>Kebabs</em></div>
+        <p>Mumbai & Pune's fastest-growing kebab brand. Est. 2011 · 8 Branches & Counting.</p>
+      </div>
+      <div class="mfc"><h5>Navigate</h5><a onclick="show('home')">Home</a><a onclick="show('branches')">All Branches</a><a onclick="show('menu')">Menu</a><a onclick="show('about')">About</a><a onclick="show('gallery')">Gallery</a><a onclick="show('contact')">Contact</a></div>
+      <div class="mfc"><h5>Pune</h5><span>Koregaon Park</span><span>Baner</span><span>Viman Nagar</span></div>
+      <div class="mfc"><h5>Mumbai</h5><span>Bandra</span><span>Andheri</span><span>Fort</span><span>Kalyan</span></div>
+      <div class="mfc"><h5>More</h5><span>Nashik (Al Arabian)</span><a href="mailto:info@miyakebab.com">info@miyakebab.com</a><a href="https://www.instagram.com/miyakebabs" target="_blank">Instagram</a><a href="https://miyakebabs.in" target="_blank">miyakebabs.in</a></div>
+    </div>
+    <div class="mfbot">© 2025 Miya Kebabs (Al Arabian Express) · All Rights Reserved · Mumbai & Pune, India</div>
+  </div>
+</div>
+
+<script>
+const menuData=[
+  {c:'kebabs',e:'🍢',n:'Seekh Kebab',d:'Juicy minced chicken kebab with Mumbai-style masala on live charcoal',p:'₹160',veg:false,bs:true},
+  {c:'kebabs',e:'🍢',n:'Mutton Seekh Kebab',d:'Juicy mutton seekh kebab rolled with onions and garlic sauce',p:'₹200',veg:false,bs:false},
+  {c:'kebabs',e:'🍢',n:'Chapli Kebab',d:'Flat-style minced kebab with coriander, green chilli & onion',p:'₹180',veg:false,bs:false},
+  {c:'kebabs',e:'🥩',n:'Shami Kebab',d:'Slow-cooked lentil & chicken patty — melt in your mouth',p:'₹150',veg:false,bs:false},
+  {c:'kebabs',e:'🌿',n:'Hara Bhara Kebab',d:'Spinach, peas & paneer patty with green chutney',p:'₹130',veg:true,bs:false},
+  {c:'shawarmas',e:'🌯',n:'Chicken Shawarma',d:'Grilled chicken in lavash with garlic sauce, pickles & veggies',p:'₹120',veg:false,bs:true},
+  {c:'shawarmas',e:'🌯',n:'Double Meat Shawarma',d:'Extra chicken with extra garlic sauce — the ultimate wrap',p:'₹160',veg:false,bs:false},
+  {c:'shawarmas',e:'🌯',n:'Peri Peri Shawarma',d:'Fiery peri peri chicken shawarma with crunchy slaw',p:'₹140',veg:false,bs:false},
+  {c:'shawarmas',e:'🌯',n:'Falafel Shawarma',d:'Crispy falafel, hummus, tahini & fresh salad in lavash',p:'₹110',veg:true,bs:false},
+  {c:'rolls',e:'🫔',n:'Chicken Tikka Roll',d:'Smoky tikka chunks with onion & chutney in lachha paratha',p:'₹130',veg:false,bs:true},
+  {c:'rolls',e:'🫔',n:'Seekh Kebab Roll',d:'Seekh kebab roll with pickled onions and mint chutney',p:'₹140',veg:false,bs:false},
+  {c:'rolls',e:'🫔',n:'Paneer Tikka Roll',d:'Tandoori paneer cubes in a crispy paratha roll',p:'₹120',veg:true,bs:false},
+  {c:'rolls',e:'🫔',n:'Egg Mughlai Roll',d:'Classic Mughlai egg roll with onion, green chilli & chutney',p:'₹90',veg:false,bs:false},
+  {c:'tandoori',e:'🍗',n:'Chicken Tikka',d:'Tender marinated chicken tikka from the live tandoor',p:'₹180',veg:false,bs:true},
+  {c:'tandoori',e:'🍗',n:'Changezi Chicken',d:'Mughlai cream & tomato gravy with tandoor-roasted chicken',p:'₹250',veg:false,bs:false},
+  {c:'tandoori',e:'🧀',n:'Paneer Tikka',d:'Charred paneer cubes with capsicum & onion',p:'₹170',veg:true,bs:false},
+  {c:'tandoori',e:'🍗',n:'Tandoori Chicken (Half)',d:'Marinated overnight and roasted in tandoor',p:'₹220',veg:false,bs:false},
+  {c:'arabic',e:'🫙',n:'Classic Hummus',d:'Creamy chickpea hummus drizzled with olive oil & sumac',p:'₹130',veg:true,bs:false},
+  {c:'arabic',e:'🥙',n:"Za'atar Naan",d:"Tandoor-baked naan topped with aromatic za'atar masala",p:'₹110',veg:true,bs:false},
+  {c:'arabic',e:'🧆',n:'Falafel Platter',d:'Crispy falafel with hummus, tahini and pita bread',p:'₹160',veg:true,bs:false},
+  {c:'arabic',e:'🫔',n:'Cheese Fatayer',d:"Cheese-stuffed flatbread with za'atar seasoning",p:'₹140',veg:true,bs:false},
+  {c:'arabic',e:'🥩',n:'Lamb on Hummus',d:'Pan-fried aromatic lamb mince on classic hummus — Arabic tradition',p:'₹280',veg:false,bs:true},
+];
+
+function renderMenuItems(f){
+  const g=document.getElementById('mmgrid');
+  const items=f==='all'?menuData:menuData.filter(i=>i.c===f);
+  g.innerHTML=items.map(i=>`<div class="mmi"><div class="mmi-em">${i.e}</div><div><h4>${i.n}</h4><p>${i.d}</p><div class="mmif"><span class="mprice">${i.p}</span>${i.veg?'<span class="mveg">🌿 Veg</span>':''}${i.bs?'<span class="mbs">★ Best Seller</span>':''}</div></div></div>`).join('');
+}
+renderMenuItems('all');
+
+document.getElementById('mtabs').querySelectorAll('.mtab').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.getElementById('mtabs').querySelectorAll('.mtab').forEach(x=>x.classList.remove('act'));
+    b.classList.add('act');renderMenuItems(b.dataset.c);
+  });
+});
+
+function filterBranch(city){
+  document.querySelectorAll('#btabs .btab').forEach(b=>{
+    b.classList.toggle('act',b.dataset.f===city||b.dataset.f==='all'&&city==='all');
+    if(b.dataset.f===city)b.classList.add('act');else b.classList.remove('act');
+  });
+  document.querySelectorAll('#bgrid .bcard').forEach(c=>{
+    c.classList.toggle('hide',city!=='all'&&c.dataset.c!==city);
+  });
+}
+
+document.getElementById('btabs').querySelectorAll('.btab').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.getElementById('btabs').querySelectorAll('.btab').forEach(x=>x.classList.remove('act'));
+    b.classList.add('act');
+    filterBranch(b.dataset.f);
+  });
+});
+
+document.getElementById('gtabs').querySelectorAll('.mtab').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.getElementById('gtabs').querySelectorAll('.mtab').forEach(x=>x.classList.remove('act'));
+    b.classList.add('act');
+    const cat=b.dataset.g;
+    document.querySelectorAll('#mgall .mgi').forEach(gi=>{
+      gi.classList.toggle('hide',cat!=='all'&&gi.dataset.g!==cat);
+    });
+  });
+});
+
+function show(page){
+  document.querySelectorAll('.mpage').forEach(p=>p.classList.remove('act'));
+  document.getElementById('page-'+page).classList.add('act');
+  document.getElementById('mk').scrollTo({top:0,behavior:'smooth'});
+}
+
+// testimonials
+const ttr=document.getElementById('ttr');
+const tcards=ttr?[...ttr.querySelectorAll('.mtcard')]:[];
+const tdots=document.getElementById('tdots');
+let tc=0,tTimer;
+function getW(){return tcards.length?tcards[0].getBoundingClientRect().width+14:0}
+if(tcards.length&&tdots){
+  tcards.forEach((_,i)=>{const d=document.createElement('div');d.className='mdot'+(i===0?' act':'');d.onclick=()=>{goT(i);resetT()};tdots.appendChild(d)});
+  function goT(i){tc=(i+tcards.length)%tcards.length;ttr.style.transform=`translateX(-${tc*getW()}px)`;tdots.querySelectorAll('.mdot').forEach((d,j)=>d.classList.toggle('act',j===tc))}
+  function resetT(){clearInterval(tTimer);tTimer=setInterval(()=>goT(tc+1),4200)}
+  document.getElementById('tprev').onclick=()=>{goT(tc-1);resetT()};
+  document.getElementById('tnext').onclick=()=>{goT(tc+1);resetT()};
+  resetT();
+  window.addEventListener('resize',()=>goT(tc));
+}
+</script>
